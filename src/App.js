@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import alanBtn from '@alan-ai/alan-sdk-web';
+import { Typography } from '@material-ui/core';
 
 // got issues with number and our app detect as number string like four instead of 4 when open article
 import wordsToNumbers from 'words-to-numbers';
 
 import NewsCards from './components/NewsCards/NewsCards';
+import Navbar from './components/Navbar/Navbar';
 import useStyles from './appStyles';
-import AlanLogo from './assests/alan-logo.jpg';
 
-const alanKey =
-  '4b782610e4dc299c5eebbc7afed54bf12e956eca572e1d8b807a3e2338fdd0dc/stage';
+// const alanKey = Your Alan Key
 
 // const alanKey = process.env.REACT_APP_ALAN_KEY;
 
@@ -54,12 +54,48 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <div className={classes.logoContainer}>
-        <img className={classes.alanLogo} src={AlanLogo} alt='' />
+    <>
+      <Navbar />
+      <div className={classes.toolbar} />
+      <div>
+        <div className={classes.logoContainer}>
+          {newsArticles.length ? (
+            <div className={classes.infoContainer}>
+              <div className={classes.card}>
+                <Typography variant='h6' component='h2'>
+                  Voice intructions, Try saying: <br />
+                  <br />
+                  Open article number [4]
+                  <br />
+                  Read me the articles
+                  <br />
+                  Go back (To Homepage)
+                </Typography>
+              </div>
+            </div>
+          ) : (
+            <>
+              {/* <img className={classes.alanLogo} src={AlanLogo} alt='' /> */}
+              <div className={classes.infoContainer}>
+                <div className={classes.card}>
+                  <Typography variant='h6' component='h2'>
+                    Voice intructions, Click alan button
+                    <br />
+                    and try saying: <br />
+                    <br />
+                    - What is this app do? Jusk ask
+                    <br />
+                    - You can do small talk
+                    <br />- You can read all the instructions below
+                  </Typography>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+        <NewsCards articles={newsArticles} activeArticle={activeArticle} />
       </div>
-      <NewsCards articles={newsArticles} activeArticle={activeArticle} />
-    </div>
+    </>
   );
 }
 
